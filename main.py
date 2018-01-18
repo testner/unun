@@ -37,36 +37,36 @@ class PackageDetail(object):
         config_parse = configparser.ConfigParser()
         config_parse.read(r'./api.conf')
         for section in config_parse.sections():
-            print(section)
-            url = config_parse.get(section, 'url')
-            data = json.loads(requests.get(url).text)
-            if data['message'] == 'OK':
-                task_id = data['task_id']
-                callback_url = data['callback_url']
-                taobao_account = data['taobao_account']
-                order_ids = data['order_ids']
-                types = data['type']
+            # print(section)
+            # url = config_parse.get(section, 'url')
+            # data = json.loads(requests.get(url).text)
+            # if data['message'] == 'OK':
+            #     task_id = data['task_id']
+            #     callback_url = data['callback_url']
+            #     taobao_account = data['taobao_account']
+            #     order_ids = data['order_ids']
+            #     types = data['type']
 
 
-                # task_id, callback_url, taobao_account, order_ids, types = 11, 'http://httpbin.org/post', 'test', [
-                #     100117951414363233,
-                #     120059992920685018,
-                #     120060496187685018,
-                #     120060496187685018,
-                #     120059992920685018,
-                #     120059992920685018,
-                #     120060496187685018,
-                #     120049828038685018,
-                #     104824283339069793,
-                #
-                #     104840635835069793,
-                #     113292759222363233,
-                #     95463588653363233,
-                #     104491155949363233,
-                #     113162865150363233,
-                #     97552613986363233,
-                #     95692491737363233,
-                #     94854031851363233], 'ali'
+                task_id, callback_url, taobao_account, order_ids, types = 11, 'http://httpbin.org/post', 'test', [
+                    100117951414363233,
+                    120059992920685018,
+                    120060496187685018,
+                    120060496187685018,
+                    120059992920685018,
+                    120059992920685018,
+                    120060496187685018,
+                    120049828038685018,
+                    104824283339069793,
+
+                    104840635835069793,
+                    113292759222363233,
+                    95463588653363233,
+                    104491155949363233,
+                    113162865150363233,
+                    97552613986363233,
+                    95692491737363233,
+                    94854031851363233], 'ali'
 
                 browser = webdriver.Chrome(executable_path='.\chromedriver.exe')
                 if types == 'tbtm':
@@ -81,6 +81,8 @@ class PackageDetail(object):
                     browser.find_element_by_css_selector('#J_SiteNavMytaobao .site-nav-menu-hd a span').click()
                     browser.find_element_by_css_selector('#bought').click()
                     for i in order_ids:
+                        order_id = i
+                        dic = defaultdict()
                         try:
                             browser.find_element_by_css_selector('.search-mod__order-search-input___29Ui1').clear()
                             browser.find_element_by_css_selector('.search-mod__order-search-input___29Ui1').send_keys(i)
@@ -99,7 +101,6 @@ class PackageDetail(object):
                                     browser.execute_script("window.scrollTo(0, 200)")
                                     slct = Selector(text=browser.page_source)
 
-                                    order_id = i
                                     # tmall
                                     if slct.css('.trade-detail-logistic span:nth-child(3)::text').extract_first():
                                         express_id = slct.css(
@@ -140,22 +141,30 @@ class PackageDetail(object):
                                     self.insert_sql(order_id, express_id, trade_result, task_id, express_name)
                                     # print(slct.css('.info div:nth-child(1) span:nth-child(4)::text').extract_first().strip()) #物流名称
 
-                                    dic = defaultdict()
                                     dic['order_id'] = order_id
                                     dic['express_id'] = express_id
                                     dic['trade_result'] = trade_result
                                     dic['task_id'] = task_id
                                     dic['express_name'] = express_name
                                     # j = json.dumps(dic)
-                                    print(dic)
+                                    print('dic:', dic)
                                     # self.L.append(dic)
                                     r = requests.post(callback_url, data=dic, headers=header)
-                                    print(r.text)
+                                    # print(r.text)
                                 except:
                                     continue
                                 finally:
                                     browser.close()
                                     browser.switch_to.window(windows[0])
+                            else:
+                                dic['order_id'] = order_id
+                                dic['express_id'] = ''
+                                dic['trade_result'] = ''
+                                dic['task_id'] = task_id
+                                dic['express_name'] = ''
+                                r = requests.post(callback_url, data=dic, headers=header)
+                                print('dic:', dic)
+                                # print(r.text)
                         except Exception as e:
                             print(e)
                             continue
@@ -180,6 +189,8 @@ class PackageDetail(object):
                     browser.find_element_by_css_selector('.context.quickentry li:nth-child(1) a').click()
 
                     for i in order_ids:
+                        order_id = i
+                        dic = defaultdict()
                         try:
                             browser.switch_to.default_content()
                             browser.switch_to.frame(browser.find_element_by_css_selector('.work-iframe'))
@@ -204,7 +215,6 @@ class PackageDetail(object):
                                     browser.find_element_by_css_selector('#logisticsTabTitle a').click()
                                     slct = Selector(text=browser.page_source)
 
-                                    order_id = i
                                     if slct.css('.item-list dl:nth-child(3) dd::text').extract_first():
                                         express_id = slct.css(
                                             '.item-list dl:nth-child(3) dd::text').extract_first().strip()
@@ -221,7 +231,6 @@ class PackageDetail(object):
 
                                     self.insert_sql(order_id, express_id, trade_result, task_id, express_name)
 
-                                    dic = defaultdict()
                                     dic['order_id'] = order_id
                                     dic['express_id'] = express_id
                                     dic['trade_result'] = trade_result
@@ -237,6 +246,14 @@ class PackageDetail(object):
                                 finally:
                                     browser.close()
                                     browser.switch_to.window(windows[0])
+                            else:
+                                dic['order_id'] = order_id
+                                dic['express_id'] = ''
+                                dic['trade_result'] = ''
+                                dic['task_id'] = task_id
+                                dic['express_name'] = ''
+                                r = requests.post(callback_url, data=dic, headers=header)
+                                print(r.text)
                         except Exception as e:
                             print(e)
                             continue
