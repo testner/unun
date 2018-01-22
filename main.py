@@ -37,41 +37,41 @@ class PackageDetail(object):
         config_parse = configparser.ConfigParser()
         config_parse.read(r'./api.conf')
         for section in config_parse.sections():
-            # print(section)
-            # url = config_parse.get(section, 'url')
-            # data = json.loads(requests.get(url).text)
-            # if data['message'] == 'OK':
-            #     task_id = data['task_id']
-            #     callback_url = data['callback_url']
-            #     taobao_account = data['taobao_account']
-            #     order_ids = data['order_ids']
-            #     types = data['type']
+            print(section)
+            url = config_parse.get(section, 'url')
+            data = json.loads(requests.get(url).text)
+            if data['message'] == 'OK':
+                task_id = data['task_id']
+                callback_url = data['callback_url']
+                taobao_account = data['taobao_account']
+                order_ids = data['order_ids']
+                types = data['type']
 
 
-                task_id, callback_url, taobao_account, order_ids, types = 11, 'http://httpbin.org/post', 'test', [
-                    100117951414363233,
-                    120059992920685018,
-                    120060496187685018,
-                    120060496187685018,
-                    120059992920685018,
-                    120059992920685018,
-                    120060496187685018,
-                    120049828038685018,
-                    104824283339069793,
-
-                    104840635835069793,
-                    113292759222363233,
-                    95463588653363233,
-                    104491155949363233,
-                    113162865150363233,
-                    97552613986363233,
-                    95692491737363233,
-                    94854031851363233], 'ali'
+                # task_id, callback_url, taobao_account, order_ids, types = 11, 'http://httpbin.org/post', 'test', [
+                #     100117951414363233,
+                #     120059992920685018,
+                #     120060496187685018,
+                #     120060496187685018,
+                #     120059992920685018,
+                #     120059992920685018,
+                #     120060496187685018,
+                #     120049828038685018,
+                #     104824283339069793,
+                #
+                #     104840635835069793,
+                #     113292759222363233,
+                #     95463588653363233,
+                #     104491155949363233,
+                #     113162865150363233,
+                #     97552613986363233,
+                #     95692491737363233,
+                #     94854031851363233], 'ali'
 
                 browser = webdriver.Chrome(executable_path='.\chromedriver.exe')
                 if types == 'tbtm':
                     browser.get('https://login.taobao.com/')
-                    # browser.implicitly_wait(2)
+                    browser.implicitly_wait(2)
                     browser.maximize_window()
                     # browser.switch_to.frame(0)
                     browser.find_element_by_css_selector('#J_Quick2Static').click()
@@ -171,7 +171,7 @@ class PackageDetail(object):
 
                 if types == 'ali':
                     browser.get('https://login.1688.com/member/signin.htm')
-                    # browser.implicitly_wait(2)
+                    browser.implicitly_wait(2)
                     browser.maximize_window()
                     browser.switch_to.frame(0)
                     browser.find_element_by_css_selector('#J_Quick2Static').click()
