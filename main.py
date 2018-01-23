@@ -164,7 +164,7 @@ class PackageDetail(object):
                                 dic['express_name'] = ''
                                 r = requests.post(callback_url, data=dic, headers=header)
                                 print('dic:', dic)
-                                # print(r.text)
+                                print(r.text)
                         except Exception as e:
                             print(e)
                             continue
