@@ -228,9 +228,7 @@ class PackageDetail(object):
                                             '.step-detail-header .stress::text').extract_first().strip()
                                     else:
                                         trade_result = ''
-
                                     self.insert_sql(order_id, express_id, trade_result, task_id, express_name)
-
                                     dic['order_id'] = order_id
                                     dic['express_id'] = express_id
                                     dic['trade_result'] = trade_result
@@ -239,9 +237,13 @@ class PackageDetail(object):
                                     # j = json.dumps(dic)
                                     print(dic)
                                     # self.L.append(dic)
-                                    r = requests.post(callback_url, data=dic, headers=header)
-                                    print(r.text)
-                                except:
+                                    try:
+                                        r = requests.post(callback_url, data=dic, headers=header)
+                                        print(r.text)
+                                    except Exception as e:
+                                        print(e)
+                                        continue
+                                except Exception:
                                     continue
                                 finally:
                                     browser.close()
