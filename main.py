@@ -147,10 +147,12 @@ class PackageDetail(object):
                                     dic['task_id'] = task_id
                                     dic['express_name'] = express_name
                                     # j = json.dumps(dic)
-                                    print('dic:', dic)
-                                    # self.L.append(dic)
-                                    r = requests.post(callback_url, data=dic, headers=header)
-                                    # print(r.text)
+                                    try:
+                                        r = requests.post(callback_url, data=dic, headers=header)
+                                        print('post返回:', r.text)
+                                        print('dic:', dic)
+                                    except Exception as e:
+                                        print(e)
                                 except:
                                     continue
                                 finally:
@@ -163,8 +165,8 @@ class PackageDetail(object):
                                 dic['task_id'] = task_id
                                 dic['express_name'] = ''
                                 r = requests.post(callback_url, data=dic, headers=header)
+                                print('post返回:', r.text)
                                 print('dic:', dic)
-                                print(r.text)
                         except Exception as e:
                             print(e)
                             continue
@@ -235,11 +237,11 @@ class PackageDetail(object):
                                     dic['task_id'] = task_id
                                     dic['express_name'] = express_name
                                     # j = json.dumps(dic)
-                                    print(dic)
                                     # self.L.append(dic)
                                     try:
                                         r = requests.post(callback_url, data=dic, headers=header)
-                                        print(r.text)
+                                        print('post返回:', r.text)
+                                        print('dic:', dic)
                                     except Exception as e:
                                         print(e)
                                         continue
@@ -255,7 +257,8 @@ class PackageDetail(object):
                                 dic['task_id'] = task_id
                                 dic['express_name'] = ''
                                 r = requests.post(callback_url, data=dic, headers=header)
-                                print(r.text)
+                                print('post返回:', r.text)
+                                print('dic:', dic)
                         except Exception as e:
                             print(e)
                             continue
