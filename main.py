@@ -94,8 +94,8 @@ class PackageDetail(object):
                                 time.sleep(300)
                             if slc.css('#viewDetail').extract_first() and slc.css(
                                     '.index-mod__empty-list___3CaW2 span::text').extract_first() != '没有符合条件的宝贝，请尝试其他搜索条件。':
-                                browser.find_element_by_css_selector('#viewDetail').click()
                                 try:
+                                    browser.find_element_by_css_selector('#viewDetail').click()
                                     windows = browser.window_handles
                                     browser.switch_to.window(windows[-1])
                                     browser.execute_script("window.scrollTo(0, 200)")
@@ -209,8 +209,8 @@ class PackageDetail(object):
                             #     time.sleep(300)
 
                             if slc.css('.bannerOrderDetail').extract_first():
-                                browser.find_element_by_css_selector('.bannerOrderDetail').click()
                                 try:
+                                    browser.find_element_by_css_selector('.bannerOrderDetail').click()
                                     windows = browser.window_handles
                                     browser.switch_to.window(windows[-1])
                                     browser.execute_script("window.scrollTo(0, 200)")
