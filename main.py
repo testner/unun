@@ -147,13 +147,15 @@ class PackageDetail(object):
                                     dic['task_id'] = task_id
                                     dic['express_name'] = express_name
                                     # j = json.dumps(dic)
+                                    print('===',dic,'===')
                                     try:
                                         r = requests.post(callback_url, data=dic, headers=header)
                                         print('post返回:', r.text)
                                         print('dic:', dic)
                                     except Exception as e:
                                         print(e)
-                                except:
+                                except Exception as e:
+                                    print(e)
                                     continue
                                 finally:
                                     browser.close()
@@ -236,6 +238,7 @@ class PackageDetail(object):
                                     dic['trade_result'] = trade_result
                                     dic['task_id'] = task_id
                                     dic['express_name'] = express_name
+                                    print('===',dic,'===')
                                     # j = json.dumps(dic)
                                     # self.L.append(dic)
                                     try:
@@ -245,7 +248,8 @@ class PackageDetail(object):
                                     except Exception as e:
                                         print(e)
                                         continue
-                                except Exception:
+                                except Exception as e:
+                                    print(e)
                                     continue
                                 finally:
                                     browser.close()
