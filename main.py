@@ -47,7 +47,6 @@ class PackageDetail(object):
                 order_ids = data['order_ids']
                 types = data['type']
 
-
                 # task_id, callback_url, taobao_account, order_ids, types = 11, 'http://httpbin.org/post', 'test', [
                 #     100117951414363233,
                 #     120059992920685018,
@@ -147,13 +146,10 @@ class PackageDetail(object):
                                     dic['task_id'] = task_id
                                     dic['express_name'] = express_name
                                     # j = json.dumps(dic)
-                                    print('===',dic,'===')
-                                    try:
-                                        r = requests.post(callback_url, data=dic, headers=header)
-                                        print('post返回:', r.text)
-                                        print('dic:', dic)
-                                    except Exception as e:
-                                        print(e)
+                                    print('===', dic, '===')
+                                    r = requests.post(callback_url, data=dic, headers=header)
+                                    print('post返回:', r.text)
+                                    print('dic:', dic)
                                 except Exception as e:
                                     print(e)
                                     continue
@@ -238,16 +234,10 @@ class PackageDetail(object):
                                     dic['trade_result'] = trade_result
                                     dic['task_id'] = task_id
                                     dic['express_name'] = express_name
-                                    print('===',dic,'===')
-                                    # j = json.dumps(dic)
-                                    # self.L.append(dic)
-                                    try:
-                                        r = requests.post(callback_url, data=dic, headers=header)
-                                        print('post返回:', r.text)
-                                        print('dic:', dic)
-                                    except Exception as e:
-                                        print(e)
-                                        continue
+                                    print('===', dic, '===')
+                                    r = requests.post(callback_url, data=dic, headers=header)
+                                    print('post返回:', r.text)
+                                    print('dic:', dic)
                                 except Exception as e:
                                     print(e)
                                     continue
