@@ -48,9 +48,12 @@ class PackageDetail(object):
                 types = data['type']
 
                 # task_id, callback_url, taobao_account, order_ids, types = 11, 'http://httpbin.org/post', 'test', [
+                #     119866911175363233,
                 #     100117951414363233,
                 #     120059992920685018,
+                #     115446187536363233,
                 #     120060496187685018,
+                #     105814885277363233,
                 #     120060496187685018,
                 #     120059992920685018,
                 #     120059992920685018,
@@ -65,7 +68,7 @@ class PackageDetail(object):
                 #     113162865150363233,
                 #     97552613986363233,
                 #     95692491737363233,
-                #     94854031851363233], 'ali'
+                #     94854031851363233], 'tbtm'
 
                 browser = webdriver.Chrome(executable_path='.\chromedriver.exe')
                 if types == 'tbtm':
@@ -79,6 +82,7 @@ class PackageDetail(object):
                     WebDriverWait(browser, 20000, 0.5).until(EC.presence_of_element_located(locator))
                     browser.find_element_by_css_selector('#J_SiteNavMytaobao .site-nav-menu-hd a span').click()
                     browser.find_element_by_css_selector('#bought').click()
+                    main_window = browser.window_handles
                     for i in order_ids:
                         order_id = i
                         dic = defaultdict()
@@ -88,9 +92,11 @@ class PackageDetail(object):
                             time.sleep(0.5)
                             browser.find_element_by_css_selector('.search-mod__order-search-button___1q3E0').click()
                             time.sleep(0.8)
+                            browser.switch_to.window(main_window[0])
                             slc = Selector(text=browser.page_source)
-                            if slc.css('.sufei-dialog-content').extract_first():
-                                time.sleep(300)
+                            # if slc.css('.sufei-dialog-content').extract_first():
+                            #     time.sleep(300)
+
                             if slc.css('#viewDetail').extract_first() and slc.css(
                                     '.index-mod__empty-list___3CaW2 span::text').extract_first() != '没有符合条件的宝贝，请尝试其他搜索条件。':
                                 try:
@@ -154,7 +160,10 @@ class PackageDetail(object):
                                     print(e)
                                     continue
                                 finally:
-                                    browser.close()
+                                    for handle in windows:
+                                        if handle != main_window[0]:
+                                            browser.switch_to.window(handle)
+                                            browser.close()
                                     browser.switch_to.window(windows[0])
                             else:
                                 dic['order_id'] = order_id
@@ -212,7 +221,9 @@ class PackageDetail(object):
                                     windows = browser.window_handles
                                     browser.switch_to.window(windows[-1])
                                     browser.execute_script("window.scrollTo(0, 200)")
-                                    browser.find_element_by_css_selector('#logisticsTabTitle a').click()
+                                    slcr = Selector(text=browser.page_source)
+                                    if slcr.css('#logisticsTabTitle a').extract_first():
+                                        browser.find_element_by_css_selector('#logisticsTabTitle a').click()
                                     slct = Selector(text=browser.page_source)
 
                                     if slct.css('.item-list dl:nth-child(3) dd::text').extract_first():
