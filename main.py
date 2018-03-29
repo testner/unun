@@ -275,11 +275,11 @@ class PackageDetail(object):
 
 if __name__ == '__main__':
     pd = PackageDetail()
-    pd.get_detail()
-    # schedule.every(1).second.do(pd.get_detail)
-    # while True:
-    #     try:
-    #         schedule.run_pending()
-    #         time.sleep(1)
-    #     except:
-    #         continue
+    # pd.get_detail()
+    schedule.every(1).second.do(pd.get_detail)
+    while True:
+        try:
+            schedule.run_pending()
+            time.sleep(1)
+        except:
+            continue
