@@ -14,7 +14,8 @@ from collections import defaultdict
 
 class PackageDetail(object):
     def __init__(self):
-        self.header = {'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjRkN2FjMGUyMTdlZWI0OGZjODcxNzQ2NDAyMThlNjc0MjRmZWEyNDE4MmQ4ZThkZDJhYTI5MGE2ZDkwZjNlOWJhYjdhNzlkZjJlOWM4NjAzIn0.eyJhdWQiOiI3IiwianRpIjoiNGQ3YWMwZTIxN2VlYjQ4ZmM4NzE3NDY0MDIxOGU2NzQyNGZlYTI0MTgyZDhlOGRkMmFhMjkwYTZkOTBmM2U5YmFiN2E3OWRmMmU5Yzg2MDMiLCJpYXQiOjE1MjAzMTg1MzgsIm5iZiI6MTUyMDMxODUzOCwiZXhwIjoxNTUxODU0NTM4LCJzdWIiOiIiLCJzY29wZXMiOltdfQ.iJ3-dYOqtfMgCfc_N9v2iDjV4BD4FYQrT2JUVlQlWKcLMBDOHcNrWC7hnw_rL8s7fuHWZ38iZLu0uBqbV8OYqyUpanPQ_nyvY-UgrUY5_R4UBftSo_DxsLp9dOueIyc_1at3lE246Z2aRsIb7iWbxvPPV8uEBNOefQexYdchp1a1P_1aPFBbW1sfyAK5cQbA6mt8ygMFDy47K69RhF-aonrs1v3MISeHYL5d5fPHwT50_KGHVOAsNdx8A1mp6aP3oa_WDpw-UFSn0imHQtXVnb-UlVvKPUfhTc7JYDywtbdFDFua4UWPMdwoAXva4bi4lydQoPx5jvu9ETs061oL4ENav6l8t_saCLUOoUoUKEU7TVI3Y3eN54rXJpqxiIztQk1VwAfz7MkKdI8ZodDfdqy_qY7O5joP8uoNKpW27ygk_Mga2b16BwabuyXl7GeYpw2LRF7F2I5yJ5tPpGCdCYo13lXTULk3_YZoIb6FGDv_8fpr7bBPknG1y9BrhBfsBP_tmeP902HoJ-c32Ywaskrs23hJGGu-a7a9BaJU1wOk4KJwsi9S5I_-QU6keMw91Zt9jTRVYn8nwuWk0eTZz6-WdS122B0xkHaYqHSkdCobbPu-bkJK5pV6CrPnm0kYRNZhDtdsGJ_sFEXO1kHBR43gpGB69ue8PFiEYtBms1k'}
+        self.header = {
+            'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjRkN2FjMGUyMTdlZWI0OGZjODcxNzQ2NDAyMThlNjc0MjRmZWEyNDE4MmQ4ZThkZDJhYTI5MGE2ZDkwZjNlOWJhYjdhNzlkZjJlOWM4NjAzIn0.eyJhdWQiOiI3IiwianRpIjoiNGQ3YWMwZTIxN2VlYjQ4ZmM4NzE3NDY0MDIxOGU2NzQyNGZlYTI0MTgyZDhlOGRkMmFhMjkwYTZkOTBmM2U5YmFiN2E3OWRmMmU5Yzg2MDMiLCJpYXQiOjE1MjAzMTg1MzgsIm5iZiI6MTUyMDMxODUzOCwiZXhwIjoxNTUxODU0NTM4LCJzdWIiOiIiLCJzY29wZXMiOltdfQ.iJ3-dYOqtfMgCfc_N9v2iDjV4BD4FYQrT2JUVlQlWKcLMBDOHcNrWC7hnw_rL8s7fuHWZ38iZLu0uBqbV8OYqyUpanPQ_nyvY-UgrUY5_R4UBftSo_DxsLp9dOueIyc_1at3lE246Z2aRsIb7iWbxvPPV8uEBNOefQexYdchp1a1P_1aPFBbW1sfyAK5cQbA6mt8ygMFDy47K69RhF-aonrs1v3MISeHYL5d5fPHwT50_KGHVOAsNdx8A1mp6aP3oa_WDpw-UFSn0imHQtXVnb-UlVvKPUfhTc7JYDywtbdFDFua4UWPMdwoAXva4bi4lydQoPx5jvu9ETs061oL4ENav6l8t_saCLUOoUoUKEU7TVI3Y3eN54rXJpqxiIztQk1VwAfz7MkKdI8ZodDfdqy_qY7O5joP8uoNKpW27ygk_Mga2b16BwabuyXl7GeYpw2LRF7F2I5yJ5tPpGCdCYo13lXTULk3_YZoIb6FGDv_8fpr7bBPknG1y9BrhBfsBP_tmeP902HoJ-c32Ywaskrs23hJGGu-a7a9BaJU1wOk4KJwsi9S5I_-QU6keMw91Zt9jTRVYn8nwuWk0eTZz6-WdS122B0xkHaYqHSkdCobbPu-bkJK5pV6CrPnm0kYRNZhDtdsGJ_sFEXO1kHBR43gpGB69ue8PFiEYtBms1k'}
         self.j = None
         self.L = []
         self.conn = pymysql.connect('127.0.0.1', 'root', 'Lovesong9', 'prod_shop_info', charset='utf8',
@@ -38,28 +39,28 @@ class PackageDetail(object):
             order_ids = data['data']['ps_order_ids']
             types = data['data']['platform_type']
 
-                # task_id, callback_url, taobao_account, order_ids, types = 11, 'http://httpbin.org/post', 'test', [
-                #     119866911175363233,
-                #     100117951414363233,
-                #     120059992920685018,
-                #     115446187536363233,
-                #     120060496187685018,
-                #     105814885277363233,
-                #     120060496187685018,
-                #     120059992920685018,
-                #     120059992920685018,
-                #     120060496187685018,
-                #     120049828038685018,
-                #     104824283339069793,
-                #
-                #     104840635835069793,
-                #     113292759222363233,
-                #     95463588653363233,
-                #     104491155949363233,
-                #     113162865150363233,
-                #     97552613986363233,
-                #     95692491737363233,
-                #     94854031851363233], 'tbtm'
+            # task_id, callback_url, taobao_account, order_ids, types = 11, 'http://httpbin.org/post', 'test', [
+            #     119866911175363233,
+            #     100117951414363233,
+            #     120059992920685018,
+            #     115446187536363233,
+            #     120060496187685018,
+            #     105814885277363233,
+            #     120060496187685018,
+            #     120059992920685018,
+            #     120059992920685018,
+            #     120060496187685018,
+            #     120049828038685018,
+            #     104824283339069793,
+            #
+            #     104840635835069793,
+            #     113292759222363233,
+            #     95463588653363233,
+            #     104491155949363233,
+            #     113162865150363233,
+            #     97552613986363233,
+            #     95692491737363233,
+            #     94854031851363233], 'tbtm'
 
             browser = webdriver.Chrome(executable_path='.\chromedriver.exe')
             if types == 'tbtm':
@@ -109,6 +110,10 @@ class PackageDetail(object):
                                         '.partial-ship-mod__box-body___py2jk div:nth-child(1) div:nth-child(2) div:nth-child(1) div:nth-child(4) .item-value::text').extract_first():
                                     express_id = slct.css(
                                         '.partial-ship-mod__box-body___py2jk div:nth-child(1) div:nth-child(2) div:nth-child(1) div:nth-child(4) .item-value::text').extract_first().strip()
+                                elif slct.css(
+                                        '.simple-list.logistics-list tbody tr:nth-child(6) td:nth-child(2)::text').extract_first():
+                                    express_id = slct.css(
+                                        '.simple-list.logistics-list tbody tr:nth-child(6) td:nth-child(2)::text').extract_first().strip()
                                 else:
                                     express_id = ''
 
@@ -117,6 +122,8 @@ class PackageDetail(object):
                                 elif slct.css('.status-desc-mod__status-desc___2Vi38 h3::text').extract_first():
                                     trade_result = slct.css(
                                         '.status-desc-mod__status-desc___2Vi38 h3::text').extract_first().strip()
+                                elif slct.css('.trade-status .wait::text').extract_first():
+                                    trade_result = slct.css('.trade-status .wait::text').extract_first().strip()
                                 else:
                                     trade_result = ''
 
@@ -131,6 +138,11 @@ class PackageDetail(object):
                                         '.partial-ship-mod__box-body___py2jk div:nth-child(1) div:nth-child(2) div:nth-child(1) div:nth-child(3) .item-value::text').extract_first():
                                     express_name = slct.css(
                                         '.partial-ship-mod__box-body___py2jk div:nth-child(1) div:nth-child(2) div:nth-child(1) div:nth-child(3) .item-value::text').extract_first().strip()
+                                elif slct.css(
+                                        '.simple-list.logistics-list tbody tr:nth-child(5) td:nth-child(2)::text').extract_first():
+                                    express_name = slct.css(
+                                        '.simple-list.logistics-list tbody tr:nth-child(5) td:nth-child(2)::text').extract_first().strip()
+
                                 else:
                                     express_name = ''
 
@@ -178,7 +190,6 @@ class PackageDetail(object):
                 browser.find_element_by_css_selector('#TPL_username_1').send_keys(taobao_account)
                 locator = (By.CSS_SELECTOR, '#J_SiteNavMytaobao .site-nav-menu-hd a span')
                 WebDriverWait(browser, 20000, 0.5).until(EC.presence_of_element_located(locator))
-
 
                 browser.get('https://work.1688.com/')
                 # browser.implicitly_wait(2)
