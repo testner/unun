@@ -30,10 +30,10 @@ class PackageDetail(object):
         self.conn.commit()
 
     def get_detail(self):
-        data = json.loads(requests.get('http://erp.kydev.org/api/fetch-waybill', headers=self.header).text)
+        data = json.loads(requests.get('https://erp.kydev.org/api/fetch-waybill', headers=self.header).text)
         if data['message'] == 'ok':
             task_id = data['data']['task_id']
-            callback_url = 'http://erp.kydev.org/api/fetch-waybill'
+            callback_url = 'https://erp.kydev.org/api/fetch-waybill/callback'
             taobao_account = data['data']['platform_account']
             order_ids = data['data']['ps_order_ids']
             types = data['data']['platform_type']
@@ -137,7 +137,7 @@ class PackageDetail(object):
                                 self.insert_sql(order_id, express_id, trade_result, task_id, express_name)
                                 # print(slct.css('.info div:nth-child(1) span:nth-child(4)::text').extract_first().strip()) #物流名称
 
-                                dic['order_id'] = order_id
+                                dic['ps_order_id'] = order_id
                                 dic['express_id'] = express_id
                                 dic['trade_result'] = trade_result
                                 dic['task_id'] = task_id
@@ -157,7 +157,7 @@ class PackageDetail(object):
                                         browser.close()
                                 browser.switch_to.window(windows[0])
                         else:
-                            dic['order_id'] = order_id
+                            dic['ps_order_id'] = order_id
                             dic['express_id'] = ''
                             dic['trade_result'] = ''
                             dic['task_id'] = task_id
@@ -169,7 +169,7 @@ class PackageDetail(object):
                         print(e)
                         continue
 
-            if types == 'ali':
+            if types == '1688':
                 browser.get('https://login.taobao.com/')
                 browser.implicitly_wait(2)
                 browser.maximize_window()
@@ -241,7 +241,7 @@ class PackageDetail(object):
                                 else:
                                     trade_result = ''
                                 self.insert_sql(order_id, express_id, trade_result, task_id, express_name)
-                                dic['order_id'] = order_id
+                                dic['ps_order_id'] = order_id
                                 dic['express_id'] = express_id
                                 dic['trade_result'] = trade_result
                                 dic['task_id'] = task_id
@@ -257,7 +257,7 @@ class PackageDetail(object):
                                 browser.close()
                                 browser.switch_to.window(windows[0])
                         else:
-                            dic['order_id'] = order_id
+                            dic['ps_order_id'] = order_id
                             dic['express_id'] = ''
                             dic['trade_result'] = ''
                             dic['task_id'] = task_id
