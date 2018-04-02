@@ -182,21 +182,12 @@ class PackageDetail(object):
                         continue
 
             if types == '1688':
-                browser.get('https://login.taobao.com/')
+                browser.get('https://login.1688.com/member/signin.htm')
                 browser.implicitly_wait(2)
                 browser.maximize_window()
-                # browser.switch_to.frame(0)
+                browser.switch_to.frame(0)
                 browser.find_element_by_css_selector('#J_Quick2Static').click()
                 browser.find_element_by_css_selector('#TPL_username_1').send_keys(taobao_account)
-                locator = (By.CSS_SELECTOR, '#J_SiteNavMytaobao .site-nav-menu-hd a span')
-                WebDriverWait(browser, 20000, 0.5).until(EC.presence_of_element_located(locator))
-
-                browser.get('https://work.1688.com/')
-                # browser.implicitly_wait(2)
-                # browser.maximize_window()
-                # browser.switch_to.frame(0)
-                # browser.find_element_by_css_selector('#J_Quick2Static').click()
-                # browser.find_element_by_css_selector('#TPL_username_1').send_keys(taobao_account)
                 # time.sleep(1)
                 locator = (By.CSS_SELECTOR, '.context.quickentry li:nth-child(1) a')
                 WebDriverWait(browser, 20000, 0.5).until(EC.presence_of_element_located(locator))
