@@ -178,7 +178,7 @@ class PackageDetail(object):
                             print(e)
                             continue
 
-                if types == '1688':
+                if types == 'ali':
                     browser.get('https://login.1688.com/member/signin.htm')
                     browser.implicitly_wait(2)
                     browser.maximize_window()
