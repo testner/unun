@@ -178,7 +178,7 @@ class PackageDetail(object):
                             print(e)
                             continue
 
-                if types == 'ali':
+                if types == '1688':
                     browser.get('https://login.1688.com/member/signin.htm')
                     browser.implicitly_wait(2)
                     browser.maximize_window()
@@ -197,6 +197,10 @@ class PackageDetail(object):
                     #     browser.find_element_by_css_selector('.mask .close').click()
                     browser.find_element_by_css_selector('.context.quickentry li:nth-child(1) a').click()
 
+                    browser.switch_to.default_content()
+                    time.sleep(2)
+                    browser.switch_to.frame(browser.find_element_by_css_selector('.work-iframe'))
+
                     for i in order_ids:
                         order_id = i
                         dic = defaultdict()
@@ -206,6 +210,8 @@ class PackageDetail(object):
                             slt = Selector(text=browser.page_source)
                             # if slt.css('#orderlist-no-items-warn::text').extract_first() == '没有符合条件的订单，请尝试其它搜索条件。':
                             #     browser.switch_to.default_content()
+                            if not slt.css('#keywords').extract_first():
+                                continue
                             browser.find_element_by_css_selector('#keywords').clear()
                             browser.find_element_by_css_selector('#keywords').send_keys(i)
                             time.sleep(0.5)
