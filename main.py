@@ -76,11 +76,13 @@ class PackageDetail(object):
                 browser.find_element_by_css_selector('#bought').click()
                 main_window = browser.window_handles
                 for i in order_ids:
-                    order_id = i
+                    order_id = str(i[0])
+                    purchase_id = str(i[1])
+
                     dic = defaultdict()
                     try:
                         browser.find_element_by_css_selector('.search-mod__order-search-input___29Ui1').clear()
-                        browser.find_element_by_css_selector('.search-mod__order-search-input___29Ui1').send_keys(i)
+                        browser.find_element_by_css_selector('.search-mod__order-search-input___29Ui1').send_keys(order_id)
                         time.sleep(0.5)
                         browser.find_element_by_css_selector('.search-mod__order-search-button___1q3E0').click()
                         time.sleep(0.8)
@@ -154,6 +156,7 @@ class PackageDetail(object):
                                 dic['trade_result'] = trade_result
                                 dic['task_id'] = task_id
                                 dic['express_name'] = express_name
+                                dic['purchase_id'] = purchase_id
                                 # j = json.dumps(dic)
                                 print('===', dic, '===')
                                 r = requests.post(callback_url, data=dic, headers=self.header)
@@ -174,6 +177,7 @@ class PackageDetail(object):
                             dic['trade_result'] = ''
                             dic['task_id'] = task_id
                             dic['express_name'] = ''
+                            dic['purchase_id'] = purchase_id
                             r = requests.post(callback_url, data=dic, headers=self.header)
                             print('post返回:', r.text)
                             print('dic:', dic)
@@ -205,7 +209,8 @@ class PackageDetail(object):
                 browser.switch_to.frame(browser.find_element_by_css_selector('.work-iframe'))
 
                 for i in order_ids:
-                    order_id = i
+                    order_id = str(i[0])
+                    purchase_id = str(i[1])
                     dic = defaultdict()
                     try:
                         browser.switch_to.default_content()
@@ -216,7 +221,7 @@ class PackageDetail(object):
                         if not slt.css('#keywords').extract_first():
                             continue
                         browser.find_element_by_css_selector('#keywords').clear()
-                        browser.find_element_by_css_selector('#keywords').send_keys(i)
+                        browser.find_element_by_css_selector('#keywords').send_keys(order_id)
                         time.sleep(0.5)
                         browser.find_element_by_css_selector('.button.lang-button.submit-button-box').click()
                         time.sleep(0.8)
@@ -254,6 +259,7 @@ class PackageDetail(object):
                                 dic['trade_result'] = trade_result
                                 dic['task_id'] = task_id
                                 dic['express_name'] = express_name
+                                dic['purchase_id'] = purchase_id
                                 print('===', dic, '===')
                                 r = requests.post(callback_url, data=dic, headers=self.header)
                                 print('post返回:', r.text)
@@ -270,6 +276,7 @@ class PackageDetail(object):
                             dic['trade_result'] = ''
                             dic['task_id'] = task_id
                             dic['express_name'] = ''
+                            dic['purchase_id'] = purchase_id
                             r = requests.post(callback_url, data=dic, headers=self.header)
                             print('post返回:', r.text)
                             print('dic:', dic)
