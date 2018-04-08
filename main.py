@@ -87,6 +87,12 @@ class PackageDetail(object):
                         order_id = i
                         dic = defaultdict()
                         try:
+                            slc_except = Selector(text=browser.page_source)
+                            if slc_except.css(
+                                    '.button-mod__button___ci6-a.button-mod__secondary___m44C7.button-mod__button___ci6-a').extract_first():
+                                browser.find_element_by_css_selector(
+                                    '.button-mod__button___ci6-a.button-mod__secondary___m44C7.button-mod__button___ci6-a').click()
+
                             browser.find_element_by_css_selector('.search-mod__order-search-input___29Ui1').clear()
                             browser.find_element_by_css_selector('.search-mod__order-search-input___29Ui1').send_keys(i)
                             time.sleep(0.5)
@@ -288,4 +294,3 @@ if __name__ == '__main__':
             time.sleep(1)
         except:
             continue
-
